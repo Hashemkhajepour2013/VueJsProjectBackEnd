@@ -1,0 +1,15 @@
+D:\ProjectUserPost\ProjectUserPost.Entities\bin\Debug\net7.0\ProjectUserPost.Entities.deps.json
+D:\ProjectUserPost\ProjectUserPost.Entities\bin\Debug\net7.0\ProjectUserPost.Entities.dll
+D:\ProjectUserPost\ProjectUserPost.Entities\bin\Debug\net7.0\ProjectUserPost.Entities.pdb
+D:\ProjectUserPost\ProjectUserPost.Entities\bin\Debug\net7.0\ProjectUserPost.Common.dll
+D:\ProjectUserPost\ProjectUserPost.Entities\bin\Debug\net7.0\ProjectUserPost.Common.pdb
+D:\ProjectUserPost\ProjectUserPost.Entities\obj\Debug\net7.0\ProjectUserPost.Entities.csproj.AssemblyReference.cache
+D:\ProjectUserPost\ProjectUserPost.Entities\obj\Debug\net7.0\ProjectUserPost.Entities.GeneratedMSBuildEditorConfig.editorconfig
+D:\ProjectUserPost\ProjectUserPost.Entities\obj\Debug\net7.0\ProjectUserPost.Entities.AssemblyInfoInputs.cache
+D:\ProjectUserPost\ProjectUserPost.Entities\obj\Debug\net7.0\ProjectUserPost.Entities.AssemblyInfo.cs
+D:\ProjectUserPost\ProjectUserPost.Entities\obj\Debug\net7.0\ProjectUserPost.Entities.csproj.CoreCompileInputs.cache
+D:\ProjectUserPost\ProjectUserPost.Entities\obj\Debug\net7.0\ProjectUserPost.Entities.csproj.CopyComplete
+D:\ProjectUserPost\ProjectUserPost.Entities\obj\Debug\net7.0\ProjectUserPost.Entities.dll
+D:\ProjectUserPost\ProjectUserPost.Entities\obj\Debug\net7.0\refint\ProjectUserPost.Entities.dll
+D:\ProjectUserPost\ProjectUserPost.Entities\obj\Debug\net7.0\ProjectUserPost.Entities.pdb
+D:\ProjectUserPost\ProjectUserPost.Entities\obj\Debug\net7.0\ref\ProjectUserPost.Entities.dll
