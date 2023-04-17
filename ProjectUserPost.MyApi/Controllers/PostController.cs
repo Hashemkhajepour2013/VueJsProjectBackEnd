@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjectUserPost.Data.Posts.Cotracts;
 using ProjectUserPost.Data.Posts.Cotracts.Dtos;
-using ProjectUserPost.Data.Users.Contracts.Dtos;
 
 namespace ProjectUserPost.MyApi.Controllers
 {
@@ -16,9 +15,9 @@ namespace ProjectUserPost.MyApi.Controllers
         }
 
         [HttpPost]
-        public async Task<int> Add([FromBody] AddPostDto dto, CancellationToken cancellationToken)
+        public Task<int> Add([FromBody] AddPostDto dto, CancellationToken cancellationToken)
         {
-            return await _service.Add(dto, cancellationToken);
+            return _service.Add(dto, cancellationToken);
         }
 
         [HttpGet("get-all")]
@@ -28,9 +27,15 @@ namespace ProjectUserPost.MyApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<PostGetById> GetById(int id, CancellationToken cancellationToken)
+        public Task<PostGetById> GetById(int id, CancellationToken cancellationToken)
         {
-            return await _service.GetById(id, cancellationToken);
+            return _service.GetById(id, cancellationToken);
+        }
+
+        [HttpPut("edit/{id}")]
+        public Task <int> Edit(int id, EditPostDto dto, CancellationToken cancellationToken)
+        {
+            return _service.Edit(id, dto, cancellationToken);
         }
     }
 }

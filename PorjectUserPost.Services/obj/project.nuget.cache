@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "h250LpjdVjt7iVvG37wjK/3j+VOgoEKudyywsEWrp/DghmmFZ162lqYepPVcn3ENoV5rgBYVwswRg29zgMDSNg==",
+  "dgSpecHash": "Px4eD736NBgiVcPYmkwBPTxYetlYJQgzFLGLJJlpVSZR+n/xnnA75dRThMacaSr8qHv4lF2cc43TCBpbIr+Etw==",
   "success": true,
   "projectFilePath": "D:\\VueJsProjectBackEnd\\PorjectUserPost.Services\\PorjectUserPost.Services.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\hashem\\.nuget\\packages\\automapper\\8.0.0\\automapper.8.0.0.nupkg.sha512",
     "C:\\Users\\hashem\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\hashem\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\hashem\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
@@ -50,6 +51,8 @@
     "C:\\Users\\hashem\\.nuget\\packages\\system.memory.data\\1.0.2\\system.memory.data.1.0.2.nupkg.sha512",
     "C:\\Users\\hashem\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\hashem\\.nuget\\packages\\system.reflection\\4.3.0\\system.reflection.4.3.0.nupkg.sha512",
+    "C:\\Users\\hashem\\.nuget\\packages\\system.reflection.emit\\4.3.0\\system.reflection.emit.4.3.0.nupkg.sha512",
+    "C:\\Users\\hashem\\.nuget\\packages\\system.reflection.emit.ilgeneration\\4.3.0\\system.reflection.emit.ilgeneration.4.3.0.nupkg.sha512",
     "C:\\Users\\hashem\\.nuget\\packages\\system.reflection.primitives\\4.3.0\\system.reflection.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\hashem\\.nuget\\packages\\system.resources.resourcemanager\\4.3.0\\system.resources.resourcemanager.4.3.0.nupkg.sha512",
     "C:\\Users\\hashem\\.nuget\\packages\\system.runtime\\4.3.0\\system.runtime.4.3.0.nupkg.sha512",

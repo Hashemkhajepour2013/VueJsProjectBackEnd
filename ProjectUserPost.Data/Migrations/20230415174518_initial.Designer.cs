@@ -11,7 +11,7 @@ using ProjectUserPost.Data;
 namespace ProjectUserPost.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230413070907_initial")]
+    [Migration("20230415174518_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -68,6 +68,9 @@ namespace ProjectUserPost.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()

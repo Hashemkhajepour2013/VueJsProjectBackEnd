@@ -6,10 +6,16 @@ namespace ProjectUserPost.Data.Users.Contracts
     {
         Task<int> Add(AddUserDto dto, CancellationToken cancellationToken);
 
-        Task<List<GetForAddPost>> GetUsersForAddPost();
+        Task<List<GetForAddPost>> GetUsersForAddPost(CancellationToken cancellationToken);
 
-        Task<List<GetAllUserDto>> GetAll();
+        Task<List<GetAllUserDto>> GetAll(CancellationToken cancellationToken);
 
         Task<UserGetByIdDto> GetById(int id, CancellationToken cancellationToken);
+
+        Task Edit(int id, EditUserDto dto, CancellationToken cancellationToken);
+
+        Task ChangeActive(int id, CancellationToken cancellationToken);
+
+        Task Delete(int id, CancellationToken cancellationToken);
     }
 }

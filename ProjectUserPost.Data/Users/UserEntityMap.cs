@@ -16,6 +16,7 @@ namespace ProjectUserPost.Data.Users
             builder.Property(_ => _.Website).HasMaxLength(100).IsRequired(false);
             builder.Property(_ => _.Phone).HasMaxLength(11).IsRequired(false);
             builder.Property(_ => _.Company).HasMaxLength(100).IsRequired(false);
+            builder.Property(_ => _.IsActive).IsRequired();
         }
     }
 }

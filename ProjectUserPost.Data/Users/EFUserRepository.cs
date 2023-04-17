@@ -1,56 +1,34 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+using ProjectUserPost.Common;
+using ProjectUserPost.Data.Repositories;
 using ProjectUserPost.Data.Users.Contracts;
 using ProjectUserPost.Data.Users.Contracts.Dtos;
 using ProjectUserPost.Entities;
 
 namespace ProjectUserPost.Data.Users
 {
-    public sealed class EFUserRepository : IUserRepository
+    public sealed class EFUserRepository : Repository<User>, IUserRepository,IScopedDependency
     {
-        private ApplicationDbContext _context;
-        public EFUserRepository(ApplicationDbContext context)
+        public EFUserRepository(ApplicationDbContext dbContext)
+            : base(dbContext)
         {
-            _context = context;
         }
 
-        public async Task Add(User user, CancellationToken cancellationToken)
+        public async Task<List<GetAllUserDto>> GetAll(CancellationToken cancellationToken)
         {
-            await _context.AddAsync(user, cancellationToken);
-
-            await _context.SaveChangesAsync();
+            return await TableNoTracking.ProjectTo<GetAllUserDto>().ToListAsync(cancellationToken);
         }
-
-        public async Task<List<GetAllUserDto>> GetAll()
+        
+        public async Task<List<GetForAddPost>> GetUsersForAddPost(CancellationToken cancellationToken)
         {
-            return await _context.Set<User>().Select(_ => new GetAllUserDto
-            {
-                Id = _.Id,
-                Company = _.Company,
-                Phone = _.Phone,
-                Email = _.Email,
-                Name = _.Name,
-                UserName = _.UserName,
-                Website = _.Website
-            }).ToListAsync();
-        }
-
-        public async Task<User?> GetById(int id, CancellationToken cancellationToken)
-        {
-            return await _context.Set<User>().FirstOrDefaultAsync(_ => _.Id == id, cancellationToken);
-        }
-
-        public async Task<List<GetForAddPost>> GetUsersForAddPost()
-        {
-            return await _context.Set<User>().Select(_ => new GetForAddPost
-            {
-                Id = _.Id,
-                Name = _.Name,
-            }).ToListAsync();
+            return await TableNoTracking.ProjectTo<GetForAddPost>().ToListAsync(cancellationToken);
         }
 
         public async Task<bool> IsExistUserById(int id, CancellationToken cancellationToken)
         {
-            return await _context.Set<User>().AnyAsync(_ => _.Id == id, cancellationToken);
+            return await TableNoTracking.AnyAsync(_ => _.Id == id, cancellationToken);
         }
     }
 }

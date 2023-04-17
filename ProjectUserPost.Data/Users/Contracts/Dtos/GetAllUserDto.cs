@@ -14,5 +14,7 @@
         public string Website { get; set; }
 
         public string Company { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

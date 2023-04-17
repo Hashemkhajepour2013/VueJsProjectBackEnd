@@ -1,4 +1,5 @@
-﻿using ProjectUserPost.Data.Users.Contracts;
+﻿using AutoMapper;
+using ProjectUserPost.Data.Users.Contracts;
 using ProjectUserPost.Data.Users.Contracts.Dtos;
 using ProjectUserPost.Entities;
 
@@ -7,6 +8,7 @@ namespace PorjectUserPost.Services.Users
     public sealed class UserAppService : IUserService
     {
         private readonly IUserRepository _repository;
+
         public UserAppService(IUserRepository repository)
         {
             _repository = repository;
@@ -14,60 +16,62 @@ namespace PorjectUserPost.Services.Users
 
         public async Task<int> Add(AddUserDto dto, CancellationToken cancellationToken)
         {
-            User user = PrototypingOfUser(dto);
-
-            await _repository.Add(user, cancellationToken);
+            var user = Mapper.Map<User>(dto);
+            
+            await _repository.AddAsync(user, cancellationToken);
 
             return user.Id;
         }
 
-        public Task<List<GetAllUserDto>> GetAll()
+        public Task<List<GetAllUserDto>> GetAll(CancellationToken cancellationToken)
         {
-            return _repository.GetAll();
+            return _repository.GetAll(cancellationToken);
         }
 
-        public Task<List<GetForAddPost>> GetUsersForAddPost()
+        public Task<List<GetForAddPost>> GetUsersForAddPost(CancellationToken cancellationToken)
         {
-            return _repository.GetUsersForAddPost();
-
+            return _repository.GetUsersForAddPost(cancellationToken);
         }
 
         public async Task<UserGetByIdDto> GetById(int id, CancellationToken cancellationToken)
         {
             User? user = await StopIfUserNotFound(id, cancellationToken);
-            return new UserGetByIdDto
-            {
-                Company = user.Company,
-                Email = user.Email,
-                Name = user.Name,
-                Phone = user.Phone,
-                UserName = user.UserName,
-                Website = user.Website
-            };
+            return Mapper.Map<UserGetByIdDto>(user);
+        }
+
+        public async Task Edit(int id, EditUserDto dto, CancellationToken cancellationToken)
+        {
+            var user = await StopIfUserNotFound(id, cancellationToken);
+
+            Mapper.Map(dto, user);
+
+            await _repository.UpdateAsync(user, cancellationToken);
+        }
+
+        public async Task ChangeActive(int id, CancellationToken cancellationToken)
+        {
+            var user = await StopIfUserNotFound(id, cancellationToken);
+            user.IsActive = !user.IsActive;
+
+            await _repository.UpdateAsync(user, cancellationToken);
+        }
+
+        public async Task Delete(int id, CancellationToken cancellationToken)
+        {
+            var user = await StopIfUserNotFound(id, cancellationToken); 
+
+            await _repository.DeleteAsync(user, cancellationToken);
         }
 
         private async Task<User?> StopIfUserNotFound(int id, CancellationToken cancellationToken)
         {
-            var user = await _repository.GetById(id, cancellationToken);
+            var user = await _repository.GetByIdAsync(cancellationToken, id);
             if (user == null)
             {
                 throw new Exception("کاربر یافت نشد");
             }
 
             return user;
-        }
-
-        private static User PrototypingOfUser(AddUserDto dto)
-        {
-            return new User
-            {
-                Company = dto.Company,
-                Email = dto.Email,
-                Name = dto.Name,
-                Phone = dto.Phone,
-                UserName = dto.UserName,
-                Website = dto.Website
-            };
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using ProjectUserPost.Data.Users.Contracts;
 using ProjectUserPost.Data.Users.Contracts.Dtos;
 
@@ -6,6 +7,7 @@ namespace ProjectUserPost.MyApi.Controllers
 {
     [ApiVersion("1")]
     [Route("api/v{version:apiVersion}/[controller]")]
+    [EnableCors("CorsPolicy")]
     public sealed class UserController : ControllerBase
     {
         private readonly IUserService _service;
@@ -14,29 +16,48 @@ namespace ProjectUserPost.MyApi.Controllers
             _service = service;
         }
 
-        [HttpPost]
-        public async Task<int> Add([FromBody] AddUserDto dto, CancellationToken cancellationToken)
+        [HttpPost("add-user")]
+        public Task<int> Add([FromBody] AddUserDto dto, CancellationToken cancellationToken)
         {
-            return await _service.Add(dto, cancellationToken);
+            return _service.Add(dto, cancellationToken);
         }
 
-        [HttpGet("get-all")]
-        public async Task<List<GetAllUserDto>> GetAll()
+        [HttpPut("{id}")]
+        public async Task Edit(int id, [FromBody] EditUserDto dto, CancellationToken cancellationToken)
         {
-            return await _service.GetAll();
+            await _service.Edit(id, dto, cancellationToken);
+        }
+        
+        [HttpGet("get-all")]
+        public async Task<List<GetAllUserDto>> GetAll(CancellationToken cancellationToken)
+        {
+            return await _service.GetAll(cancellationToken);
         }
 
 
         [HttpGet("get-all-for-add-post")]
-        public async Task<List<GetForAddPost>> GetUsersForAddPost()
+        public async Task<List<GetForAddPost>> GetUsersForAddPost(CancellationToken cancellationToken)
         {
-            return await _service.GetUsersForAddPost();
+            return await _service.GetUsersForAddPost(cancellationToken);
         }
 
         [HttpGet("{id}")]
         public async Task<UserGetByIdDto> GetById(int id, CancellationToken cancellationToken)
         {
             return await _service.GetById(id, cancellationToken);
+        }
+
+        [HttpPut("change-state/{id}")]
+        public async Task<bool> ChangeState(int id, CancellationToken cancellationToken)
+        {
+            await _service.ChangeActive(id, cancellationToken);
+            return true;
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task Delete(int id, CancellationToken cancellationToken)
+        {
+           await _service.Delete(id, cancellationToken);
         }
     }
 }

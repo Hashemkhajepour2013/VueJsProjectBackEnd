@@ -20,7 +20,7 @@ namespace PorjectUserPost.Services.Posts
 
         public async Task<int> Add(AddPostDto dto, CancellationToken cancellationToken)
         {
-            await StopIfUserNotFound(dto, cancellationToken);
+            await StopIfUserNotFound(dto.userId, cancellationToken);
 
             Post post = PrototypingOfPost(dto);
 
@@ -34,9 +34,36 @@ namespace PorjectUserPost.Services.Posts
             return _repository.GetAll();
         }
 
-        private async Task StopIfUserNotFound(AddPostDto dto, CancellationToken cancellationToken)
+        public async Task<int> Edit(int id, EditPostDto dto, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.IsExistUserById(dto.userId, cancellationToken);
+            await StopIfUserNotFound(dto.userId, cancellationToken);
+
+            Post? post = await StopIfPostNotFound(id, cancellationToken);
+
+            post.Title = dto.Title;
+            post.Body = dto.Body;
+            post.userId = dto.userId;
+
+            await _repository.Edit(post, cancellationToken);
+
+            return post.Id;
+        }
+
+        public async Task<PostGetById> GetById(int id, CancellationToken cancellationToken)
+        {
+            var post = await _repository.GetById(id, cancellationToken);
+
+            return new PostGetById
+            {
+                Body = post.Body,
+                NameUser = post.User.Name,
+                Title = post.Title
+            };
+        }
+
+        private async Task StopIfUserNotFound(int userId, CancellationToken cancellationToken)
+        {
+            var user = await _userRepository.IsExistUserById(userId, cancellationToken);
             if (!user)
             {
                 throw new Exception("کاربری یافت نشد");
@@ -53,16 +80,15 @@ namespace PorjectUserPost.Services.Posts
             };
         }
 
-        public async Task<PostGetById> GetById(int id, CancellationToken cancellationToken)
+        private async Task<Post?> StopIfPostNotFound(int id, CancellationToken cancellationToken)
         {
             var post = await _repository.GetById(id, cancellationToken);
-
-            return new PostGetById
+            if (post == null)
             {
-                Body = post.Body,
-                NameUser = post.User.Name,
-                Title = post.Title
-            };
+                throw new Exception("پست مورد نظر یافت نشد");
+            }
+
+            return post;
         }
     }
 }

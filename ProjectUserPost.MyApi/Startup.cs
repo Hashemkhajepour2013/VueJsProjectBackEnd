@@ -4,7 +4,10 @@ using ProjectUserPost.Data.Posts;
 using ProjectUserPost.Data.Posts.Cotracts;
 using ProjectUserPost.Data.Users;
 using ProjectUserPost.Data.Users.Contracts;
+using ProjectUserPost.Data.Users.Contracts.Dtos;
+using ProjectUserPost.Entities;
 using ProjectUserPost.WebFeramwork.Configuration;
+using ProjectUserPost.WebFeramwork.Middlewares;
 using ProjectUserPost.WebFeramwork.Swagger;
 
 namespace ProjectUserPost.MyApi
@@ -14,13 +17,31 @@ namespace ProjectUserPost.MyApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            AutoMapper.Mapper.Initialize(config =>
+            {
+                config.CreateMap<AddUserDto, User>();
+                config.CreateMap<User, GetAllUserDto>();
+                config.CreateMap<User, UserGetByIdDto>();
+                config.CreateMap<EditUserDto, User>();
+                config.CreateMap<User, GetForAddPost>();
+            });
         }
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.WithOrigins("https://localhost:7193")
+                              .WithMethods("PUT", "GET", "HEAD", "POST", "DELETE", "OPTIONS")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
             services.AddDbContext(Configuration);
 
             services.AddMinimalMvc();
@@ -37,10 +58,14 @@ namespace ProjectUserPost.MyApi
             services.AddScoped<IUserService, UserAppService>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("CorsPolicy");
+
             app.IntializeDatabase();
+
+            app.UseCustomExceptionHandler();
 
             app.UseHsts(env);
 

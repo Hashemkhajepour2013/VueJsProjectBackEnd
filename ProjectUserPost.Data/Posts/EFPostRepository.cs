@@ -20,6 +20,13 @@ namespace ProjectUserPost.Data.Posts
             await _context.SaveChangesAsync(cancellationToken);
         }
 
+        public async Task Edit(Post post, CancellationToken cancellationToken)
+        {
+            _context.Set<Post>().Update(post);
+
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
         public async Task<List<GetAllPostDto>> GetAll()
         {
             return await _context.Set<Post>().Select(_ => new GetAllPostDto

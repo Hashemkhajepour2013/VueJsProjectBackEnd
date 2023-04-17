@@ -10,5 +10,7 @@ namespace ProjectUserPost.Data.Posts.Cotracts
         Task<List<GetAllPostDto>> GetAll();
 
         Task<Post?> GetById(int id, CancellationToken cancellationToken);
+
+        Task Edit (Post post, CancellationToken cancellationToken);
     }
 }
